@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Advanced Vocabulary Quiz</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    .question { margin-bottom: 20px; }
+    .correct { color: green; }
+    .incorrect { color: red; }
+  </style>
+</head>
+<body>
+  <h1>Advanced Vocabulary Online Test</h1>
+  <form id="quizForm">
+    <div id="questionsContainer"></div>
+    <button type="button" onclick="gradeQuiz()">Submit</button>
+  </form>
+  <p id="scoreResult"></p>
+
+  <script>
+    const questions = [
+      ["It is_______that the Minister of Justice should be accused of corruption.", "C", ["A. sarcastic", "B. sardonic", "C. ironic", "D. cynical"]],
+      ["We had a long and exhausted car_______before reaching our desired destination.", "A", ["A. journey", "B. trip", "C. voyage", "D. excursion"]],
+      ["The older inhabitants looked on the festival as an opportunity to bridge the_______between the newcomers and themselves.", "B", ["A. hole", "B. gap", "C. blank", "D. crevice"]],
+      ["The judge show that the murderer had shown a callous_______for human life.", "A", ["A. disregard", "B. ignorance", "C. omission", "D. neglect"]],
+      ["I think that this painting can be_______in a number of different but equally valid ways.", "B", ["A. dissected", "B. interpreted", "C. translated", "D. rendered"]],
+      ["What a miracle! The racing driver climbed out of the wreckage completely_______", "C", ["A. unwounded", "B. intact", "C. unscathed", "D. well-preserved"]],
+      ["Although we now believe this to be impossible, early scientists made an attempt to produce_______motion machines, that is, machines which would never stop.", "A", ["A. perpetual", "B. everlasting", "C. undying", "D. forever"]],
+      ["Philip has a(n)_______to fainting at the sight of blood.", "C", ["A. inclination", "B. predilection", "C. predisposition", "D. penchant"]],
+      ["The school committee paid_______to their famous former pupil by naming the new gym after her.", "B", ["A. esteem", "B. homage", "C. honor", "D. respect"]],
+      ["Even a suspicion of wrongdoing can_______a politician's reputation.", "C", ["A. stain", "B. impair", "C. tarnish", "D. smudge"]],
+      ["Don't take your mobile phone with you to the exam or else the examiners will_______it if they found it on you.", "C", ["A. seize", "B. impound", "C. confiscate", "D. sequester"]],
+      ["When people live in such close_______to each other, there are bound to be occasional problems.", "D", ["A. neighborhood", "B. vicinity", "C. juxtaposition", "D. proximity"]],
+      ["A few political extremists_______the crowd to attack the police officer.", "C", ["A. animated", "B. agitated", "C. incited", "D. stirred"]],
+      ["Hundreds of people in the hardest hit-zone are at_______from disease unless a tsunami-like aid effort is mobilized.", "C", ["A. threat", "B. menace", "C. risk", "D. danger"]],
+      ["I dislike him so much that I find it difficult even to be_______to him. I must say I loathe him.", "A", ["A. civil", "B. tactful", "C. diplomatic", "D. well-mannered"]],
+      ["From the result of your test, it’s evident that you were paying_______attention to the lecture.", "D", ["A. scanty", "B. meager", "C. insufficient", "D. scant"]],
+      ["When she sings, she has the_______ability to make even bad songs sound good.", "B", ["A. sparse", "B. rare", "C. infrequent", "D. scarce"]],
+      ["She praised her husband for his dignity under the_______of the tabloid press.", "A", ["A. onslaught", "B. assault", "C. onset", "D. offensive"]],
+      ["He's still_______over whether to accept the job he's just been offered.", "C", ["A. tottering", "B. doddering", "C. dithering", "D. faltering"]],
+      ["His mother's illness had placed him under a considerable_______", "D", ["A. worry", "B. tension", "C. stress", "D. strain"]],
+      ["In an act of defiance Pete raised a_______fist at the speaker.", "A", ["A. clenched", "B. pressed", "C. gripped", "D. clasped"]],
+      ["What you actually earn bears no_______to all my needs.", "B", ["A. link", "B. relation", "C. association", "D. connection"]],
+      ["Being out in the_______sun all morning make me feel quite weak.", "C", ["A. grilling", "B. flaming", "C. blazing", "D. frying"]],
+      ["The audience_______at the comedian as her performance went from bad to worse.", "B", ["A. derided", "B. jeered", "C. grinned", "D. ridiculed"]],
+      ["_______after trying three times, he passed the examination.", "D", ["A. Last of all", "B. Lastly", "C. Last", "D. At last"]],
+      ["Even a few drops of this liquid would represent a_______dose for an adult, let alone a small child.", "D", ["A. mortal", "B. deadly", "C. killing", "D. lethal"]],
+      ["The police believed that the Prime Minister was killed by a_______assassin.", "B", ["A. rented", "B. hired", "C. chartered", "D. leased"]],
+      ["A wave of bombings_______through the crowded capital’s business district.", "D", ["A. slashed", "B. hacked", "C. incised", "D. ripped"]],
+      ["Due to the fog, her flight from Pyongyang was_______", "D", ["A. belated", "B. tardy", "C. unpunctual", "D. overdue"]],
+      ["After the interval, the change of_______brought a gasp of surprise from the audience.", "B", ["A. panorama", "B. scenery", "C. view", "D. vista"]]
+    ];
+
+    const container = document.getElementById('questionsContainer');
+    questions.forEach((q, idx) => {
+      const div = document.createElement('div');
+      div.className = 'question';
+      div.innerHTML = `<p><strong>Question ${idx + 1}:</strong> ${q[0]}</p>` +
+        q[2].map((opt, i) => `
+          <label><input type="radio" name="q${idx + 1}" value="${String.fromCharCode(65 + i)}"> ${opt}</label><br>`
+        ).join('');
+      container.appendChild(div);
+    });
+
+    function gradeQuiz() {
+      let score = 0;
+      let total = questions.length;
+      for (let i = 0; i < total; i++) {
+        const name = `q${i + 1}`;
+        const selected = document.querySelector(`input[name="${name}"]:checked`);
+        if (selected && selected.value === questions[i][1]) {
+          score++;
+        }
+      }
+      document.getElementById('scoreResult').innerText = `You scored ${score} out of ${total}`;
+    }
+  </script>
+</body>
+</html>
